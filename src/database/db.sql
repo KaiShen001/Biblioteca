@@ -1,4 +1,4 @@
-/*  src/database/bd.sql  */
+
 
 
 CREATE DATABASE Biblioteca
