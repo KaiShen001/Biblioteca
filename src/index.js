@@ -21,6 +21,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', join(__dirname, 'views'));
 
 
+
 app.engine('.hbs', engine({
     defaultLayout: 'main',
     layoutsDir: join(app.get('views'), 'layouts'),
@@ -51,3 +52,8 @@ app.use(express.static(join(__dirname, 'public')));
 
 app.listen(app.get('port'), () =>
     console.log('Server listening on port', app.get('port')));
+
+
+
+
+

@@ -13,8 +13,8 @@ router.get('/add', (req, res) => {
 
 
 router.get('/', (req, res) => {
-    const showNavbar = false; 
-    res.render('auth/login', { showNavbar }); 
+    const showNavbar = false;
+    res.render('auth/login', { showNavbar });
 });
 
 
@@ -88,7 +88,7 @@ router.use(session({
 
 function requireAuth(req, res, next) {
     if (!req.session.usuarioId) {
-        res.redirect('/login'); 
+        res.redirect('/login');
     } else {
         next();
     }
@@ -96,7 +96,7 @@ function requireAuth(req, res, next) {
 
 
 router.get('/index', (req, res) => {
-    res.render('index'); 
+    res.render('index');
 });
 
 
@@ -108,26 +108,26 @@ router.get('/', (req, res) => {
 
 router.get('/login', (req, res) => {
     if (req.session.usuarioId) {
-        res.redirect('/index'); 
+        res.redirect('/index');
     } else {
-        res.render('auth/login', { mensajeError: '', showNavbar: false }); 
+        res.render('auth/login', { mensajeError: '', showNavbar: false });
     }
 });
 
 
-
-
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res,) => {
     try {
         const { correo, contrasena } = req.body;
         const [rows] = await pool.query('SELECT * FROM usuarios WHERE correo_electronico = ?', [correo]);
 
         if (rows.length === 1) {
-            const usuario = rows[0]; 
+            const usuario = rows[0];
 
             if (contrasena === usuario.contrasena) {
-                req.session.usuarioId = usuario.id; 
-                res.redirect('/index');
+
+                    req.session.usuarioId = usuario.id;
+                    res.redirect('/index'); 
+                
             } else {
                 res.render('auth/login', { mensajeError: 'Correo o contraseña incorrecta' });
             }
@@ -139,6 +139,10 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 });
+
+
+
+
 
 
 router.get('/lista', requireAuth, async (req, res) => {
@@ -162,7 +166,7 @@ router.get('/logout', (req, res) => {
 
 
 router.post('/logout', (req, res) => {
-    
+
     req.session.destroy((err) => {
         if (err) {
             console.error(err);
@@ -203,5 +207,6 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Error al registrar el usuario' });
     }
 });
+
 
 export default router;
