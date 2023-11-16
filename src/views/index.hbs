@@ -18,23 +18,23 @@
     }
   </script>
 
-
+  <link rel="stylesheet" href="/css/chat.css">
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/index">
-      <b>Biblioteca</b>
-    </a>
-    <div class="ml-auto"> 
-            
-      <form action="/logout" method="POST">
-        <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
-      </form>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/index">
+        <b>Biblioteca</b>
+      </a>
+      <div class="ml-auto">
+
+        <form action="/logout" method="POST">
+          <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+        </form>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/index">
@@ -72,6 +72,46 @@
       </div>
     </div>
   </main>
+
+
+
+  <div id="chat-logo" onclick="toggleChat()">
+    <img src="/img/logo2.png" alt="" width="100" height="100">
+  </div>
+
+  <div id="chat" style="display: none;">
+    <ul id="chat-messages"></ul>
+    <input id="chat-input" autocomplete="off" /><button onclick="sendChatMessage()">Enviar</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    const socket = io();
+
+    socket.on('user connected', (userId) => {
+      console.log(`Usuario ${userId} conectado`);
+    });
+
+    socket.on('user disconnected', (userId) => {
+      console.log(`Usuario ${userId} desconectado`);
+    });
+
+    socket.on('chat message', ({ userId, msg }) => {
+      $('#chat-messages').append($('<li>').text(`Usuario ${userId}: ${msg}`));
+    });
+
+    function sendChatMessage() {
+      const message = $('#chat-input').val();
+      socket.emit('chat message', message);
+      $('#chat-input').val('');
+    }
+
+    function toggleChat() {
+      $('#chat').toggle();
+    }
+  </script>
 
 </body>
 
