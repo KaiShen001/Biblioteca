@@ -6,19 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(function (registration) {
-          console.log('Service Worker registrado con éxito:', registration);
-        })
-        .catch(function (error) {
-          console.log('Error al registrar el Service Worker:', error);
-        });
-    }
-  </script>
-
-  <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/chat.css">
 </head>
 
 <body>
@@ -43,6 +31,9 @@
     <div class="ml-auto">
       <a class="btn btn-outline-primary btn-sm" href="/lista">Listar</a>
       <a class="btn btn-outline-primary btn-sm" href="/reporte">Reportes</a>
+      <a class="btn btn-outline-primary btn-sm"href="/contacto">Contacto</a>
+      <a class="btn btn-outline-primary btn-sm"href="/mapa">Mapa</a>
+
     </div>
   </nav>
 
@@ -113,6 +104,19 @@
     }
   </script>
 
+
+
+
+
+
+
+
+
+
+
+<h1>Loading Screen Example</h1>
+    <div id="loading-screen">Loading...</div>
+    <script src="/js/main.js" defer></script>
 </body>
 
 </html>

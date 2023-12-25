@@ -5,12 +5,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./src/index.js",
+    "test": "mocha --require esm --recursive --experimental-vm-modules"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai-http": "^4.4.0",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
@@ -18,9 +21,14 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.6.1",
     "nocache": "^4.0.0",
-    "socket.io": "^4.7.2"
+    "node-fetch": "^3.3.2",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   }
 }

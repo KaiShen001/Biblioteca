@@ -1,5 +1,3 @@
-
-
 import express from 'express';
 import http from 'http';
 import session from 'express-session';
@@ -10,10 +8,13 @@ import { fileURLToPath } from 'url';
 import librosRoutes from './routes/libros.routes.js';
 import { Server } from 'socket.io';
 
+
 const app = express();
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const server = http.createServer(app);
 const io = new Server(server);
+
 
 const socketToUsername = {};
 
@@ -45,6 +46,8 @@ app.use(session({
     saveUninitialized: false,
 }));
 
+console.log('Sesiones configuradas');
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', join(__dirname, 'views'));
 
@@ -61,16 +64,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    if (req.session.usuarioId) {
-        res.redirect('/lista');
-    } else {
-        res.redirect('/login');
-    }
+  if (req.session.usuarioId) { 
+      res.redirect('/lista');
+  } else {
+      res.redirect('/login');
+  }
 });
+
 
 app.use('/', librosRoutes);
 
 app.use(express.static(join(__dirname, 'public')));
 
+
+
 server.listen(app.get('port'), () =>
     console.log('Server listening on port', app.get('port')));
+
+export { server, io };
+
+export default app;

@@ -1,5 +1,5 @@
 
-
+import fetch from 'node-fetch';
 import express from 'express';
 import session from 'express-session';
 import pool from '../database.js';
@@ -9,7 +9,6 @@ const router = express.Router();
 router.get('/add', (req, res) => {
     res.render('libros/add');
 });
-
 
 
 router.get('/', (req, res) => {
@@ -207,6 +206,45 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Error al registrar el usuario' });
     }
 });
+
+
+router.get('/contacto', (req, res) => {
+    res.render('contacto');
+  });
+  
+  router.post('/contacto', async (req, res) => {
+    try {
+      const { email } = req.body;
+      const formspreeEndpoint = 'https://formspree.io/f/xleyklav';
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+  
+      if (response.ok) {
+        console.log('Formulario enviado exitosamente');
+        res.render('contacto', { success: true });
+      } else {
+        console.error('Error al enviar el formulario:', response.statusText);
+        res.render('contacto', { error: true });
+      }
+    } catch (error) {
+      console.error(error);
+      res.render('contacto', { error: true });
+    }
+  });
+
+
+  router.get('/mapa', (req, res) => {
+    res.render('mapa');  
+});
+
+router.get('/loading', (req, res) => {
+    res.render('loading');
+  });
 
 
 export default router;
